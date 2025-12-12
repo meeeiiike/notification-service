@@ -1,17 +1,19 @@
 package ie.atu.notification_service.controller;
 
-import ie.atu.notification_service.dto.BookDueSoonRequestDTO;
-import ie.atu.notification_service.dto.BookOverdueRequestDTO;
+//import feign.Response;
+//import ie.atu.notification_service.dto.BookDueSoonRequestDTO;
+//import ie.atu.notification_service.dto.BookOverdueRequestDTO;
+import ie.atu.notification_service.dto.NotificationDTO;
+import ie.atu.notification_service.model.NotificationEntity;
 import ie.atu.notification_service.service.EmailService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
-@RequestMapping("/email/book")
+@RequestMapping("/api/notification")
 
 public class NotificationController {
 
@@ -21,6 +23,20 @@ public class NotificationController {
         this.emailService = emailService;
     }
 
+    @PostMapping
+    public ResponseEntity<NotificationEntity> sendNotification(@Valid@RequestBody NotificationDTO dto){
+        return ResponseEntity.ok(emailService.sendNotification(dto));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<NotificationEntity>> getNotifications(){
+        return ResponseEntity.ok(emailService.getNotifications());
+    }
+
+}
+
+
+/*
     @PostMapping("/due-soon")
     public ResponseEntity<Void> sendDueSoon(@RequestBody @Valid BookDueSoonRequestDTO request) {
         emailService.sendBookDueSoon(request);
@@ -32,10 +48,8 @@ public class NotificationController {
         emailService.sendBookOverdue(request);
         return ResponseEntity.ok().build();
     }
-}
 
-
-
+     */
 
 // Rethink endpoints needed
 //**********************************************************************
