@@ -9,6 +9,7 @@ import org.springframework.mail.SimpleMailMessage;
 //import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -25,11 +26,18 @@ public class EmailService {
         NotificationEntity notification = new NotificationEntity();
         notification.setUserId(dto.getUserId());
         notification.setNotification(dto.getNotification());
+        notification.setEmail(dto.getEmail());
+        notification.setDueDate(dto.getDueDate());
+        notification.setCreatedAt(LocalDate.now());
         return notificationRepository.save(notification);
     }
 
     public List<NotificationEntity> getNotifications(){
         return notificationRepository.findAll();
+    }
+
+    public List<NotificationEntity> getNotificationByUserId(String userid){
+        return notificationRepository.findByUserId(userid);
     }
 
     /*

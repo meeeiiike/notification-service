@@ -13,10 +13,11 @@ public class NotificationEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long userId;
+    private String userId;
     private String notification;
     private LocalDate dueDate;
-    //private String userEmail;
+    private LocalDate createdAt;
+    private String email;
     //private String bookTitle;
     //private String type;
 }

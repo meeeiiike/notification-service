@@ -5,6 +5,7 @@ package ie.atu.notification_service.controller;
 //import ie.atu.notification_service.dto.BookOverdueRequestDTO;
 import ie.atu.notification_service.dto.NotificationDTO;
 import ie.atu.notification_service.model.NotificationEntity;
+import ie.atu.notification_service.repository.NotificationRepository;
 import ie.atu.notification_service.service.EmailService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +19,11 @@ import java.util.List;
 public class NotificationController {
 
     private final EmailService emailService;
+    private final NotificationRepository notificationRepository;
 
-    public NotificationController(EmailService emailService) {
+    public NotificationController(EmailService emailService, NotificationRepository notificationRepository) {
         this.emailService = emailService;
+        this.notificationRepository = notificationRepository;
     }
 
     @PostMapping
@@ -31,6 +34,11 @@ public class NotificationController {
     @GetMapping
     public ResponseEntity<List<NotificationEntity>> getNotifications(){
         return ResponseEntity.ok(emailService.getNotifications());
+    }
+
+    @GetMapping("/user/{userid}")
+    public ResponseEntity<List<NotificationEntity>> getUserNotification(@PathVariable String userid){
+        return ResponseEntity.ok(emailService.getNotificationByUserId(userid));
     }
 
 }
