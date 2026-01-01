@@ -19,11 +19,9 @@ import java.util.List;
 public class NotificationController {
 
     private final EmailService emailService;
-    private final NotificationRepository notificationRepository;
 
-    public NotificationController(EmailService emailService, NotificationRepository notificationRepository) {
+    public NotificationController(EmailService emailService) {
         this.emailService = emailService;
-        this.notificationRepository = notificationRepository;
     }
 
     @PostMapping
